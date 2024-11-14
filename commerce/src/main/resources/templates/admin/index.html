@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Accesories</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      th:href="@{/assets/img/kaiadmin/diamond-ring.png}"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: [[@{/assets/css/fonts.min.css}]],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/plugins.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/kaiadmin.min.css}" />
+
+    <script src="https://kit.fontawesome.com/b9e22d861b.js" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar" data-background-color="white">
+        <div class="sidebar-logo">
+          <!-- Logo Header -->
+          <div class="logo-header" data-background-color="white">
+            <a th:href="@{/}" class="logo">
+              <img
+                th:src="@{/assets/img/kaiadmin/main-logo.png}"
+                alt="navbar brand"
+                class="navbar-brand"
+                height="20"
+              />
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <li class="nav-item active">
+                <a
+                  th:href="@{/admin}"
+                  class="collapsed"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-home"></i>
+                  <p>Thống kê</p>
+                </a>
+              </li>
+              <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                  <i class="fa fa-ellipsis-h"></i>
+                </span>
+                <h4 class="text-section">Quản lý</h4>
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/admin/users}">
+                  <i class="fa-solid fa-user"></i>
+                  <p>Người dùng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/admin/categories}">
+                  <i class="fa-solid fa-shop"></i>
+                  <p>Sản phẩm</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/admin/orders}">
+                  <i class="fa-solid fa-receipt"></i>
+                  <p>Đơn hàng</p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="white">
+              <a th:href="@{/}" class="logo">
+                <img
+                  th:src="@{/assets/img/kaiadmin/main-logo.png}"
+                  alt="navbar brand"
+                  class="navbar-brand"
+                  height="20"
+                />
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+                </button>
+              </div>
+              <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+              </button>
+            </div>
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar Header -->
+          <nav
+            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+          >
+            <div class="container-fluid">
+              <nav
+                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
+              >
+              </nav>
+
+              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                <li class="nav-item topbar-user dropdown hidden-caret">
+                  <a
+                    class="dropdown-toggle profile-pic"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    aria-expanded="false"
+                  >
+                    <div class="avatar-sm">
+                      <img
+                        th:src="@{/images/profile-user.png}"
+                        alt="..."
+                        class="avatar-img rounded-circle"
+                      />
+                    </div>
+                    <span class="profile-username">
+                      <span class="op-7">Xin chào,</span>
+                      <span class="fw-bold" th:text="${#authentication.name}"></span>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-user animated fadeIn">
+                    <div class="dropdown-user-scroll scrollbar-outer">
+                      <li>
+                        <form th:action="@{/logout}" method="post">
+                          <input class="dropdown-item" type="submit" value="Đăng xuất">
+                        </form>
+                      </li>
+                    </div>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <!-- End Navbar -->
+        </div>
+
+        <div class="container">
+          <div class="page-inner">
+            <div
+              class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
+            >
+              <div>
+                <h3 class="fw-bold mb-3">Thống kê</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-round">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div
+                          class="icon-big text-center icon-primary bubble-shadow-small"
+                        >
+                          <i class="fas fa-users"></i>
+                        </div>
+                      </div>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <p class="card-category">Số lượt truy cập</p>
+                          <h4 class="card-title" th:text="${count}"></h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-round">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div
+                          class="icon-big text-center icon-info bubble-shadow-small"
+                        >
+                          <i class="fas fa-user-check"></i>
+                        </div>
+                      </div>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <p class="card-category">Người dùng</p>
+                          <h4 class="card-title" th:text="${user}"></h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-round">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div
+                          class="icon-big text-center icon-success bubble-shadow-small"
+                        >
+                          <i class="fas fa-luggage-cart"></i>
+                        </div>
+                      </div>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <p class="card-category">Tổng tiền</p>
+                          <h4 class="card-title" th:if="${total != null}" th:text="${@priceFormatter.formatPrice(total)}"></h4>
+                          <h4 class="card-title" th:if="${total == null}" th:text="'VND 0'"></h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-round">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div
+                          class="icon-big text-center icon-secondary bubble-shadow-small"
+                        >
+                          <i class="far fa-check-circle"></i>
+                        </div>
+                      </div>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <p class="card-category">Đơn hàng</p>
+                          <h4 class="card-title" th:text="${order}"></h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card card-round">
+                  <div class="card-header">
+                    <div class="card-head-row">
+                      <div class="card-title">Doanh thu của tháng hiện tại</div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-container" style="min-height: 375px">
+                      <canvas id="lineChart"></canvas>
+                    </div>
+                    <!-- <div id="myChartLegend"></div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="card card-round">
+                  <div class="card-header">
+                    <div class="card-head-row">
+                      <div class="card-title">Doanh thu của năm hiện tại</div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-container" style="min-height: 375px">
+                      <canvas id="barChart"></canvas>
+                    </div>
+                    <!-- <div id="myChartLegend"></div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="card card-round">
+                  <div class="card-body">
+                    <div class="card-head-row card-tools-still-right">
+                      <div class="card-title">Người dùng mới</div>
+                      <div class="card-tools">
+                        <div class="dropdown">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-list py-4">
+                      <div class="item-list" th:each="u : ${newUser}">
+                        <div class="avatar">
+                          <img
+                            th:src="@{/images/profile-user.png}"
+                            alt="..."
+                            class="avatar-img rounded-circle"
+                          />
+                        </div>
+                        <div class="info-user ms-3">
+                          <div th:text="${u.email}" class="username" style="word-wrap: break-word; max-width: 200px;"></div>
+                          <div th:text="${u.fullName}" class="status" style="word-wrap: break-word; max-width: 200px;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="card card-round">
+                  <div class="card-header">
+                    <div class="card-head-row card-tools-still-right">
+                      <div class="card-title">Đơn hàng đã hoàn thành</div>
+                      <div class="card-tools">
+                        <div class="dropdown">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <!-- Projects table -->
+                      <table class="table align-items-center mb-0">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col">Mã đơn hàng</th>
+                            <th scope="col" class="text-end">Thời gian đặt hàng</th>
+                            <th scope="col" class="text-end">Giá trị</th>
+                            <th scope="col" class="text-end">Trạng thái</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr th:each="o : ${newOrder}">
+                            <th scope="row">
+                              <button
+                                class="btn btn-icon btn-round btn-success btn-sm me-2"
+                              >
+                                <i class="fa fa-check"></i>
+                              </button>
+                              <span th:text="${o.code}"></span>
+                            </th>
+                            <td th:text="${#dates.format(o.orderDate, 'HH:mm dd/MM/yyyy')}" class="text-end"></td>
+                            <td style="word-wrap: break-word; max-width: 200px;" th:text="${@priceFormatter.formatPrice(o.totalAmount)}" class="text-end"></td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Đã giao</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script th:src="@{/assets/js/core/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/assets/js/core/popper.min.js}"></script>
+    <script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+
+    <!-- Chart JS -->
+    <script th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
+
+    <!-- jQuery Sparkline -->
+    <script th:src="@{/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js}"></script>
+
+    <!-- Chart Circle -->
+    <script th:src="@{/assets/js/plugin/chart-circle/circles.min.js}"></script>
+
+    <!-- Datatables -->
+    <script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
+
+    <!-- Bootstrap Notify -->
+    <script th:src="@{/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js}"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script th:src="@{/assets/js/plugin/jsvectormap/jsvectormap.min.js}"></script>
+    <script th:src="@{/assets/js/plugin/jsvectormap/world.js}"></script>
+
+    <!-- Google Maps Plugin -->
+    <script th:src="@{/assets/js/plugin/gmaps/gmaps.js}"></script>
+
+    <!-- Sweet Alert -->
+    <script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
+
+    <!-- Kaiadmin JS -->
+    <script th:src="@{/assets/js/kaiadmin.min.js}"></script>
+    
+    <script>
+      var labels = [[${labels}]];
+      var data = [[${data}]];
+
+      labels.reverse();
+      data.reverse();
+
+      var labelsMonthly = [[${labelsMonthly}]];
+      var dataMonthly = [[${dataMonthly}]];
+
+      // labelsMonthly.reverse();
+      // dataMonthly.reverse();
+
+      var lineChart = document.getElementById("lineChart").getContext("2d");
+      var myLineChart = new Chart(lineChart, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Doanh thu tháng hiện tại',
+            data: data,
+            fill: false,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+            tension: 0.1
+          }]
+        },
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+      });
+
+      var barChart = document.getElementById("barChart").getContext("2d");
+      var myBarChart = new Chart(barChart, {
+        type: "bar",
+        data: {
+          labels: labelsMonthly,
+          datasets: [{
+            label: 'Doanh thu năm hiện tại',
+            data: dataMonthly,
+            backgroundColor: 'rgba(29, 122, 243, 0.5)',
+            borderColor: '#1d7af3',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Tháng'
+                }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Doanh thu'
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

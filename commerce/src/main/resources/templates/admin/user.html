@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Accesories</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      th:href="@{/assets/img/kaiadmin/diamond-ring.png}"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: [[@{/assets/css/fonts.min.css}]],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/plugins.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/kaiadmin.min.css}" />
+
+    <script src="https://kit.fontawesome.com/b9e22d861b.js" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar" data-background-color="white">
+        <div class="sidebar-logo">
+          <!-- Logo Header -->
+          <div class="logo-header" data-background-color="white">
+            <a th:href="@{/}" class="logo">
+              <img
+                th:src="@{/assets/img/kaiadmin/main-logo.png}"
+                alt="navbar brand"
+                class="navbar-brand"
+                height="20"
+              />
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <li class="nav-item">
+                <a
+                  th:href="@{/admin}"
+                  class="collapsed"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-home"></i>
+                  <p>Thống kê</p>
+                </a>
+              </li>
+              <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                  <i class="fa fa-ellipsis-h"></i>
+                </span>
+                <h4 class="text-section">Quản lý</h4>
+              </li>
+              <li class="nav-item active">
+                <a th:href="@{/admin/users}">
+                  <i class="fa-solid fa-user"></i>
+                  <p>Người dùng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/admin/categories}">
+                  <i class="fa-solid fa-shop"></i>
+                  <p>Sản phẩm</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/admin/orders}">
+                  <i class="fa-solid fa-receipt"></i>
+                  <p>Đơn hàng</p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="white">
+              <a th:href="@{/}" class="logo">
+                <img
+                  th:src="@{/assets/img/kaiadmin/main-logo.png}"
+                  alt="navbar brand"
+                  class="navbar-brand"
+                  height="20"
+                />
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+                </button>
+              </div>
+              <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+              </button>
+            </div>
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar Header -->
+          <nav
+            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+          >
+            <div class="container-fluid">
+              <nav
+                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
+              >
+              </nav>
+
+              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                <li class="nav-item topbar-user dropdown hidden-caret">
+                  <a
+                    class="dropdown-toggle profile-pic"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    aria-expanded="false"
+                  >
+                    <div class="avatar-sm">
+                      <img
+                        th:src="@{/images/profile-user.png}"
+                        alt="..."
+                        class="avatar-img rounded-circle"
+                      />
+                    </div>
+                    <span class="profile-username">
+                      <span class="op-7">Xin chào,</span>
+                      <span class="fw-bold" th:text="${#authentication.name}"></span>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-user animated fadeIn">
+                    <div class="dropdown-user-scroll scrollbar-outer">
+                      <li>
+                        <form th:action="@{/logout}" method="post">
+                          <input class="dropdown-item" type="submit" value="Đăng xuất">
+                        </form>
+                      </li>
+                    </div>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <!-- End Navbar -->
+        </div>
+
+        <div class="container">
+          <div class="page-inner">
+            <div class="page-header">
+              <div>
+              <h3 class="fw-bold mb-3">Người dùng</h3>
+              </div>
+              <div class="ms-md-auto py-2 py-md-0">
+                <a th:href="@{/admin/users/create}" class="btn btn-primary btn-round">Thêm người dùng</a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Danh sách người dùng</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table
+                        id="basic-datatables"
+                        class="display table table-striped table-hover"
+                      >
+                        <thead>
+                          <tr>
+                            <th>Địa chỉ email</th>
+                            <th>Tên</th>
+                            <th>Địa chỉ</th>
+                            <th>Số điện thoại</th>
+                            <th>Ngày tạo</th>
+                            <th>Chức vụ</th>
+                            <th>Thao tác</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr th:each="u : ${users}">
+                            <td th:text="${u.email}"></td>
+                            <td th:text="${u.fullName}"></td>
+                            <td th:text="${u.address}"></td>
+                            <td th:text="${u.phoneNumber}"></td>
+                            <td th:text="${#dates.format(u.createdAt, 'yyyy/MM/dd')}"></td>
+                            <td th:text="${u.role == 'ROLE_admin' ? 'Quản trị viên' : 'Khách hàng'}"></td>
+                            <td><div class="form-button-action">
+                                <button type="button"
+                                  data-bs-toggle="tooltip"
+                                  title=""
+                                  class="btn btn-link btn-primary btn-lg"
+                                  data-original-title="Edit Task" >
+                                  <a th:href="@{/admin/users/{id}(id=${u.id})}"><i class="fa fa-edit"></i></a>
+                                </button>
+                                <button type="button"
+                                  data-bs-toggle="tooltip"
+                                  title=""
+                                  class="btn btn-link btn-danger"
+                                  data-original-title="Remove">
+                                  <a style="color: red" th:href="@{/admin/users/delete/{id}(id=${u.id})}"><i class="fa fa-times"></i></a>    
+                                </button>
+                              </div></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script th:src="@{/assets/js/core/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/assets/js/core/popper.min.js}"></script>
+    <script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+    <!-- Datatables -->
+    <script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
+    <!-- Kaiadmin JS -->
+    <script th:src="@{/assets/js/kaiadmin.min.js}"></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#basic-datatables").DataTable({
+          "lengthChange": false,
+          "language": {
+            "search": "Tìm kiếm:",
+            "info": "Đang hiển thị _START_ đến _END_ của _TOTAL_ mục",
+            "infoEmpty": "Không có dữ liệu nào",
+            "infoFiltered": "(đã lọc từ _MAX_ mục tổng)",
+            "paginate": {
+                "next": "Tiếp",
+                "previous": "Trước"
+            },
+            "emptyTable": "Không có dữ liệu nào",
+            "zeroRecords": "Không tìm thấy bản ghi nào"
+          },
+          "columnDefs": [
+            {
+              "targets": 6,
+              "orderable": false,
+              "searchable": false
+            }
+          ]
+        });
+      });
+    </script>
+  </body>
+</html>
