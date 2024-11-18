@@ -61,7 +61,11 @@ public class ProductController {
 
     @GetMapping("/shop/{code}")
     public String singleProduct(Model theModel, @PathVariable("code") String code){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.getUserByEmail(email);
         Product product = productService.getProductWithReviews(code);
+        boolean heart = productFavoriteService.isProductInFavorites(user, product);
         Product p = productService.getProductWithImage(code);
         double rv = 0.0;
         if (product.getReviews() != null){
@@ -77,6 +81,7 @@ public class ProductController {
         theModel.addAttribute("p", p);
         theModel.addAttribute("rv", rv);
         theModel.addAttribute("products", products);
+        theModel.addAttribute("heart", heart);
 
         return "single-product";
     }

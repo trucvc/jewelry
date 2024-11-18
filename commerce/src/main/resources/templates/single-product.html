@@ -41,7 +41,7 @@
         d="M20.16 5A6.29 6.29 0 0 0 12 4.36a6.27 6.27 0 0 0-8.16 9.48l6.21 6.22a2.78 2.78 0 0 0 3.9 0l6.21-6.22a6.27 6.27 0 0 0 0-8.84m-1.41 7.46l-6.21 6.21a.76.76 0 0 1-1.08 0l-6.21-6.24a4.29 4.29 0 0 1 0-6a4.27 4.27 0 0 1 6 0a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 0a4.29 4.29 0 0 1 .08 6Z" />
     </symbol>
     <symbol id="heartCheck" viewBox="0 0 24 24">
-      <path fill="#FF0000" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+      <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
     </symbol>
     <symbol xmlns="http://www.w3.org/2000/svg" id="navbar-icon" viewBox="0 0 16 16">
       <path
@@ -132,7 +132,7 @@
             </svg>
           </button>
           <a th:href="@{/}" class="navbar-brand  d-flex d-lg-none">
-            <img src="images/main-logo.png" alt="Logo">
+            <img th:src="@{/images/main-logo.png}" alt="Logo">
           </a>
           <div class="offcanvas offcanvas-end " tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
             <div class="offcanvas-header p-4">
@@ -258,10 +258,22 @@
                 <span th:if="${product.reviews.isEmpty()}" class="rating secondary-font">Chưa có đánh giá nào</span>
                 <span th:unless="${product.reviews.isEmpty()}" class="rating secondary-font" th:text="${rv}"></span>
               </div>
-              <div>
+              <div sec:authorize="isAnonymous()">
                 <a th:href="@{/add-wishlist(code=${product.code})}" class="btn-icon btn-wishlist rounded-circle">
                   <svg width="20" height="20">
                     <use xlink:href="#heart"></use>
+                  </svg>
+                </a>
+              </div>
+              <div sec:authorize="isAuthenticated()">
+                <a th:unless="${heart}" th:href="@{/add-wishlist(code=${product.code})}" class="btn-icon btn-wishlist rounded-circle">
+                  <svg width="20" height="20">
+                    <use xlink:href="#heart"></use>
+                  </svg>
+                </a>
+                <a th:if="${heart}" class="btn-icon btn-wishlist rounded-circle">
+                  <svg width="20" height="20">
+                    <use xlink:href="#heartCheck"></use>
                   </svg>
                 </a>
               </div>

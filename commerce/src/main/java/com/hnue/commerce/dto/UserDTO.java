@@ -26,6 +26,7 @@ public class UserDTO {
 
     @NotBlank(message = "Không để trống tên")
     @Length(min = 3, max = 20, message = "Tên nằm trong khoảng từ 3-20 kí tự")
+    @Pattern(regexp = "^[A-Za-zÀ-Ýà-ỹĐđ\\s]+$", message = "Tên chỉ được chứa chữ cái và khoảng trắng")
     private String fullName;
 
     @NotBlank(message = "Không để trống chức vụ")
