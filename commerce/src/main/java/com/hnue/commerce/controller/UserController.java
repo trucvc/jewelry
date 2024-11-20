@@ -88,14 +88,14 @@ public class UserController {
         String email = authentication.getName();
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
-        if (!passwordEncoder.matches(changPasswordDTO.getOldPassword(), userDetails.getPassword())) {
+        if (changPasswordDTO.getOldPassword() != null && !passwordEncoder.matches(changPasswordDTO.getOldPassword(), userDetails.getPassword())) {
             result.rejectValue("oldPassword", "error.oldPassword", "Mật khẩu cũ không đúng");
         }else{
-            if (changPasswordDTO.getOldPassword().equals(changPasswordDTO.getNewPassword())){
+            if (changPasswordDTO.getOldPassword() != null && changPasswordDTO.getNewPassword() != null && changPasswordDTO.getOldPassword().equals(changPasswordDTO.getNewPassword())){
                 result.rejectValue("oldPassword", "error.oldPassword", "Mật khẩu cũ và mật khẩu mới không được giống nhau");
             }
         }
-        if (!changPasswordDTO.getNewPassword().equals(changPasswordDTO.getConfirmPassword())) {
+        if (changPasswordDTO.getNewPassword() != null && changPasswordDTO.getConfirmPassword() != null && !changPasswordDTO.getNewPassword().equals(changPasswordDTO.getConfirmPassword())) {
             result.rejectValue("confirmPassword", "error.confirmPassword", "Mật khẩu không giống nhau");
         }
         if (result.hasErrors()){
@@ -159,7 +159,7 @@ public class UserController {
     @PostMapping("/reset")
     public String resetPassword(@Valid @ModelAttribute("reset") ResetPassword password,
                                 BindingResult result, HttpSession session){
-        if (!password.getNewPassword().equals(password.getConfirmPassword())) {
+        if (password.getNewPassword() != null && password.getConfirmPassword() != null && !password.getNewPassword().equals(password.getConfirmPassword())) {
             result.rejectValue("confirmPassword", "error.confirmPassword", "Mật khẩu không giống nhau");
         }
         if (result.hasErrors()){
