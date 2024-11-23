@@ -231,7 +231,8 @@
               <div class="cart-info d-flex flex-wrap align-items-center ">
                 <div class="col-lg-3">
                   <div class="card-image">
-                    <img src="images/product-item1.jpg" alt="cloth" class="img-fluid">
+                    <img th:if="${favorite.product.images.isEmpty()}" src="images/diamond-ring.png" alt="categories" class="product-image img-fluid">
+                    <img th:unless="${favorite.product.images.isEmpty()}" th:src="${favorite.product.images[0].imageUrl}" alt="categories" class="product-image img-fluid">
                   </div>
                 </div>
                 <div class="col-lg-9">

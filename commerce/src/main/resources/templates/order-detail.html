@@ -149,8 +149,8 @@
             <div class="offcanvas-body d-flex justify-content-lg-between align-items-lg-center p-4 p-lg-0">
 
               <div>
-                <a href="index.html" class="navbar-brand  d-none d-lg-flex">
-                  <img src="images/main-logo.png" alt="Logo">
+                <a th:href="@{/}" class="navbar-brand  d-none d-lg-flex">
+                  <img th:src="@{/images/main-logo.png}" alt="Logo">
                 </a>
               </div>
               <div>
@@ -240,7 +240,8 @@
                   <div class="cart-info d-flex flex-wrap align-items-center ">
                     <div class="col-lg-3">
                       <div class="card-image">
-                        <img th:src="@{/images/product-item7.jpg}" alt="cloth" class="img-fluid">
+                        <img th:if="${item.product.images.isEmpty()}" src="images/diamond-ring.png" alt="cloth" class="img-fluid">
+                        <img th:unless="${item.product.images.isEmpty()}" th:src="${item.product.images[0].imageUrl}" alt="cloth" class="img-fluid">
                       </div>
                     </div>
                     <div class="col-lg-8">
@@ -405,7 +406,7 @@
       <div class="row justify-content-center">
         <div class="col-md-5">
           <div class="image-holder  mb-4">
-            <img src="images/footer-logo.png" alt="logo" class="img-fluid">
+            <img th:src="@{/images/footer-logo.png}" alt="logo" class="img-fluid">
           </div>
 
           <div>

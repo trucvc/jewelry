@@ -224,7 +224,7 @@
               <div class="swiper product-thumbnail-slider">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide" th:if="${p.images.isEmpty()}">
-                    <img th:src="@{/images/logo.png}" alt="img" class="thumb-image img-fluid">
+                    <img th:src="@{/images/diamond-ring.png}" alt="img" class="thumb-image img-fluid">
                   </div>
                   <div class="swiper-slide" th:each="img : ${p.images}">
                     <img th:src="@{${img.imageUrl}}" alt="img" class="thumb-image img-fluid">
@@ -238,7 +238,7 @@
               <div class="swiper product-large-slider">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide" th:if="${p.images.isEmpty()}">
-                    <img th:src="@{/images/logo.png}" alt="img" class="thumb-image img-fluid">
+                    <img th:src="@{/images/diamond-ring.png}" alt="img" class="thumb-image img-fluid">
                   </div>
                   <div class="swiper-slide" th:each="img : ${p.images}">
                     <img th:src="@{${img.imageUrl}}" alt="img" class="thumb-image img-fluid">
@@ -400,7 +400,7 @@
           <div class="product-item mb-5" style="border: 1px solid #000; border-radius: 15px; padding: 20px; margin: 20px;">
             <div class="image-holder position-relative">
                   <a th:href="@{/shop/{code}(code=${tempProduct.code})}">
-                    <img th:if="${tempProduct.images.isEmpty()}" th:src="@{/images/logo.png}" alt="categories" class="product-image img-fluid">
+                    <img th:if="${tempProduct.images.isEmpty()}" th:src="@{/images/diamond-ring.png}" alt="categories" class="product-image img-fluid">
                     <img th:unless="${tempProduct.images.isEmpty()}" th:src="${tempProduct.images[0].imageUrl}" alt="categories" class="product-image img-fluid">
                   </a>
                   <a th:href="@{/add-wishlist(code=${tempProduct.code})}" class="btn-icon btn-wishlist rounded-circle">

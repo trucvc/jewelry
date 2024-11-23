@@ -234,7 +234,7 @@
               <div class="product-item mb-5">
                 <div class="image-holder position-relative">
                   <a th:href="@{/shop/{code}(code=${tempProduct.code})}">
-                    <img th:if="${tempProduct.images.isEmpty()}" src="images/logo.png" alt="categories" class="product-image img-fluid">
+                    <img th:if="${tempProduct.images.isEmpty()}" src="images/diamond-ring.png" alt="categories" class="product-image img-fluid">
                     <img th:unless="${tempProduct.images.isEmpty()}" th:src="${tempProduct.images[0].imageUrl}" alt="categories" class="product-image img-fluid">
                   </a>
                   <a th:href="@{/add-wishlist(code=${tempProduct.code})}" class="btn-icon btn-wishlist rounded-circle">

@@ -74,7 +74,7 @@ public class ProductController {
             rv = Math.round(rv * 10.0) / 10.0;
         }
         Category category = categoryService.getCategoryWithLimitedProducts(product.getCategory().getId(), code);
-        category.getProducts().remove(product);
+//        category.getProducts().remove(product);
         List<Product> products = productService.getRelatedProducts(category.getProducts());
 
         theModel.addAttribute("product", product);

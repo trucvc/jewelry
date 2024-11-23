@@ -266,7 +266,8 @@
                   <div class="cart-info d-flex flex-wrap align-items-center ">
                     <div class="col-lg-3">
                       <div class="card-image">
-                        <img src="images/product-item7.jpg" alt="cloth" class="img-fluid">
+                        <img th:if="${item.product.images.isEmpty()}" src="images/diamond-ring.png" alt="cloth" class="img-fluid">
+                        <img th:unless="${item.product.images.isEmpty()}" th:src="${item.product.images[0].imageUrl}" alt="cloth" class="img-fluid">
                       </div>
                     </div>
                     <div class="col-lg-8">
@@ -280,24 +281,24 @@
                 </td>
                 <td class="py-4 align-middle" th:if="${item.active} == 1">
                   <div class="input-group product-qty align-items-center pe-lg-5">
-                    <span class="input-group-btn">
+                    <!-- <span class="input-group-btn">
                       <button type="button" class="quantity-left-minus p-1 p-lg-2 btn btn-outline-primary btn-number"
                         data-type="minus">
                         <svg width="16" height="16">
                           <use xlink:href="#minus"></use>
                         </svg>
                       </button>
-                    </span>
+                    </span> -->
                     <input type="number" id="quantity" th:name="${item.id}"
                       class="form-control input-number border-primary text-center p-2 mx-1" th:value="${item.quantity}">
-                    <span class="input-group-btn">
+                    <!-- <span class="input-group-btn">
                       <button type="button" class="quantity-right-plus p-1 p-lg-2 btn btn-outline-primary btn-number"
                         data-type="plus" data-field="">
                         <svg width="16" height="16">
                           <use xlink:href="#plus"></use>
                         </svg>
                       </button>
-                    </span>
+                    </span> -->
                   </div>
                 </td>
                 <td class="py-4 align-middle" th:if="${item.active} == 0">
