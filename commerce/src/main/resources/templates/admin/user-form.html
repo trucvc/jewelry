@@ -244,6 +244,7 @@
                           <select
                             class="form-select"
                             id="exampleFormControlSelect1" th:field="*{role}"
+                            th:disabled="${userDTO.email == 'admin@example.com'}"
                           >
                             <option value="">Chọn chức vụ</option>
                             <option value="ROLE_admin">Quản trị viên</option>

@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -181,7 +182,14 @@ public class UserController {
 
     @GetMapping("/admin/users")
     public String userForAdmin(Model theModel){
-        theModel.addAttribute("users", userService.getAllUsers());
+        List<User> users = userService.getAllUsers();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.getUserByEmail("admin@example.com");
+        if (!email.equals(user.getEmail())){
+            users.remove(user);
+        }
+        theModel.addAttribute("users", users);
         return "admin/user";
     }
 
@@ -212,7 +220,14 @@ public class UserController {
 
     @GetMapping("/admin/users/{id}")
     public String updateUserForAdmin(@PathVariable("id") int id, Model theModel){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
         User user = userService.getUser(id);
+        if (user.getEmail().equals("admin@example.com")){
+            if (!email.equals("admin@example.com")){
+                return "redirect:/admin/users";
+            }
+        }
         UserDTO userDTO = UserDTO.builder()
                 .email(user.getEmail()).fullName(user.getFullName())
                 .phone(user.getPhoneNumber()).role(user.getRole())

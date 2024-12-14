@@ -329,6 +329,12 @@ public class OrderController {
     public String cancelOrderStatus(@PathVariable("id") int id){
         Order order = orderService.getOrder(id);
         order.setStatus(4);
+        for (OrderItems items : order.getOrderItems()){
+            int quan = items.getQuantity();
+            Product product = items.getProduct();
+            product.setStockQuantity(product.getStockQuantity()+quan);
+            productService.updateProduct(product);
+        }
         orderService.updateOrder(order);
         return "redirect:/admin/orders";
     }
